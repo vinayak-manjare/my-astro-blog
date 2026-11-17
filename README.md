@@ -1,63 +1,75 @@
-# Astro Starter Kit: Blog
+# Vinayak's Blog
 
-```sh
-npm create astro@latest -- --template blog
+A personal blog built with [Astro](https://astro.build/) and deployed to GitHub Pages. It features articles on backend architecture, cloud systems, generative AI, and software engineering.
+
+## Run locally
+
+### Requirements
+
+- Node.js 22.12 or later
+- npm
+
+### Install and start
+
+```powershell
+npm ci
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open [http://localhost:4321/my-astro-blog/](http://localhost:4321/my-astro-blog/). The development server watches for changes and rebuilds the site automatically.
 
-Features:
+## Write a blog post
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+Add a Markdown (`.md`) or MDX (`.mdx`) file to `src/content/blog/`. Each post must include `title`, `description`, and `pubDate` in its frontmatter. `updatedDate` and `heroImage` are optional.
 
-## 🚀 Project Structure
+```md
+---
+title: 'Your article title'
+description: 'A short summary for the article listing and search engines.'
+pubDate: '2026-11-17'
+heroImage: '../../assets/your-cover-image.png'
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+Write your article here using Markdown.
+```
+
+Posts are listed by publication date. Set `heroImage` to an image in `src/assets/` when you want a cover image. The blog page and RSS feed include posts whose publication date is not in the future.
+
+## Build and preview
+
+Create a production build in `dist/`:
+
+```powershell
+npm run build
+```
+
+Preview the production build locally:
+
+```powershell
+npm run preview
+```
+
+The site uses `/my-astro-blog/` as its base path for GitHub Pages, so local URLs include that path too.
+
+## Deployment
+
+The workflow in `.github/workflows/deploy.yml` builds and deploys the site to GitHub Pages when changes are pushed to `main`. In the repository's **Settings → Pages**, set the build and deployment source to **GitHub Actions**.
+
+The published site is [vinap.github.io/my-astro-blog](https://vinap.github.io/my-astro-blog/).
+
+## Project structure
 
 ```text
-├── public/
+.
+├── .github/workflows/deploy.yml  # GitHub Pages deployment
+├── public/                       # Public files, including favicons
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── assets/                   # Images and fonts
+│   ├── components/               # Shared Astro components
+│   ├── content/blog/             # Markdown and MDX posts
+│   ├── layouts/                  # Page layouts
+│   ├── pages/                    # Site routes and RSS feed
+│   └── styles/                   # Global styles
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+└── package.json
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
