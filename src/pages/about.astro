@@ -1,112 +1,534 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.png';
-import ProfessionalJourney from '../assets/Professional_Journey.png';
-import TechnicalCore from '../assets/Technical_Core_Competencies.png';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const linkedInUrl = 'https://www.linkedin.com/in/vinayakmanjare/';
 ---
 
-<Layout
-	title="About Me: The Architect Behind the AI 🛠️"
-	description="Senior Technical Architect specializing in future-proofing legacy environments with AI and enterprise systems."
-	pubDate={new Date('April 15 2026')}
-	heroImage={AboutHeroImage}
->
-	<style>
-		@keyframes pulse {
-			0% { transform: scale(1); }
-			50% { transform: scale(1.1); }
-			100% { transform: scale(1); }
-		}
-		@keyframes fadeIn {
-			from { opacity: 0; transform: translateY(20px); }
-			to { opacity: 1; transform: translateY(0); }
-		}
-		@keyframes slideInLeft {
-			from { opacity: 0; transform: translateX(-50px); }
-			to { opacity: 1; transform: translateX(0); }
-		}
-		@keyframes bounce {
-			0%, 100% { transform: translateY(0); }
-			50% { transform: translateY(-15px); }
-		}
-		@keyframes float {
-			0%, 100% { transform: translateY(0px); }
-			50% { transform: translateY(-10px); }
-		}
-		@keyframes glow {
-			0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
-			50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1); }
-		}
-		@keyframes rotate {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
-		}
-		@keyframes shimmer {
-			0% { background-position: -1000px 0; }
-			100% { background-position: 1000px 0; }
-		}
-		h2 {
-			animation: slideInLeft 1s ease-out;
-		}
-		p, ul, img {
-			animation: fadeIn 1.5s ease-out;
-		}
-		hr {
-			animation: fadeIn 2s ease-out;
-		}
-	</style>
-	<p style="animation: bounce 2s infinite;">
-		Hello! I'm Vinayak Manjare, a Senior Technical Architect 🎯 based in Pune. With over 15 years of experience, I've built the backbone of high-stakes enterprise systems across BFSI, Procurement, and E-commerce. I specialize in "future-proofing" legacy environments. Lately, that means bridging the gap between experimental LLMs and production-grade software.  I don't just build AI; I build the architectural plumbing that makes it reliable, secure, and cost-effective. 🚀
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="About Vinayak Manjare | Vinayak's Blog"
+			description="Meet Vinayak Manjare, a Pune-based Senior Technical Architect working across enterprise systems, cloud platforms, and applied AI."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="about-page">
+			<section class="intro" aria-labelledby="about-title">
+				<div class="intro-copy">
+					<p class="eyebrow">About</p>
+					<h1 id="about-title">Hi, I’m Vinayak Manjare.</h1>
+					<p class="lead">
+						I’m a Senior Technical Architect based in Pune, with over 15 years of experience building
+						and evolving enterprise systems across banking, procurement, and e-commerce.
+					</p>
+					<p>
+						My work focuses on making complex systems dependable: modernizing legacy platforms,
+						designing backend and cloud architecture, and bringing AI capabilities into production
+						with a focus on reliability, security, and cost.
+					</p>
+					<div class="actions">
+						<a class="button button-primary" href={`${basePath}/blog`}>Explore the blog</a>
+						<a class="button button-secondary" href={linkedInUrl} target="_blank" rel="noreferrer">
+							Connect on LinkedIn
+						</a>
+					</div>
+				</div>
+				<aside class="profile-card" aria-label="Profile highlights">
+					<p class="eyebrow">At a glance</p>
+					<dl>
+						<div>
+							<dt>Based in</dt>
+							<dd>Pune, India</dd>
+						</div>
+						<div>
+							<dt>Experience</dt>
+							<dd>15+ years</dd>
+						</div>
+						<div>
+							<dt>Focus</dt>
+							<dd>Enterprise architecture &amp; applied AI</dd>
+						</div>
+					</dl>
+				</aside>
+			</section>
 
-	<h2><img src="https://img.icons8.com/color/24/000000/briefcase.png" alt="Journey" style="vertical-align: middle; margin-right: 8px; animation: rotate 3s linear infinite;" /> My Professional Journey 📈</h2>
-	<img src={ProfessionalJourney.src} alt="Professional Journey" style="max-width: 100%; height: auto; animation: float 3s ease-in-out infinite;" />
-	<p>
-		From mastering product foundations at Yardi to engineering real-time data streaming for Deutsche Bank, I've focused on systems that stay live 99.9% ⏱️ of the time.
-	</p>
-	<ul>
-		<li><strong>Product Foundation (2011–2018):</strong> Spent 7 years at Yardi developing and designing the P2P Systems</li>
-		<li><strong>Enterprise Scale (2018–2022):</strong> Engineered identity platforms for Charles Schwab and high-velocity monitoring for Deutsche Bank.</li>
-		<li><strong>AI Innovation (2023–Present):</strong> Currently a Project Lead at Persistent, transforming legacy sourcing platforms into AI-enabled powerhouses.</li>
-	</ul>
+			<section class="section" aria-labelledby="journey-title">
+				<div class="section-heading">
+					<p class="eyebrow">Career</p>
+					<h2 id="journey-title">Professional journey</h2>
+					<p>Building products and platforms, from core procurement workflows to enterprise-scale systems.</p>
+				</div>
+				<ol class="timeline">
+					<li class="timeline-item">
+						<p class="timeline-date">2011–2018</p>
+						<div>
+							<h3>Product foundations <span>Yardi</span></h3>
+							<p>Developed and designed procure-to-pay systems, building a foundation in enterprise products and business workflows.</p>
+						</div>
+					</li>
+					<li class="timeline-item">
+						<p class="timeline-date">2018–2022</p>
+						<div>
+							<h3>Enterprise scale <span>Charles Schwab · Deutsche Bank</span></h3>
+							<p>Worked on identity platforms and high-velocity monitoring systems in large financial-services environments.</p>
+						</div>
+					</li>
+					<li class="timeline-item">
+						<p class="timeline-date">2023–Present</p>
+						<div>
+							<h3>AI innovation <span>Persistent</span></h3>
+							<p>As a Project Lead, transforming legacy sourcing platforms into AI-enabled products and workflows.</p>
+						</div>
+					</li>
+				</ol>
+			</section>
 
-	<hr />
+			<section class="section" aria-labelledby="impact-title">
+				<div class="section-heading">
+					<p class="eyebrow">Outcomes</p>
+					<h2 id="impact-title">Engineering with measurable impact</h2>
+				</div>
+				<div class="impact-grid">
+					<article class="impact-card">
+						<p class="metric">25%</p>
+						<h3>Lower cloud costs</h3>
+						<p>Reduced monthly AWS Fargate costs through strategic microservices refactoring.</p>
+					</article>
+					<article class="impact-card">
+						<p class="metric">60%</p>
+						<h3>Lower token costs</h3>
+						<p>Cut LLM token consumption using custom metadata caching in AI workflows.</p>
+					</article>
+				</div>
+			</section>
 
-	<h2><img src="https://img.icons8.com/color/24/000000/brain.png" alt="Brain" style="vertical-align: middle; margin-right: 8px;" /> 🧠 Technical Core & Impact ⚡</h2>
-	<img src={TechnicalCore.src} alt="Technical Core Competencies" style="max-width: 100%; height: auto; animation: float 3s ease-in-out infinite;" />
-	<p>
-		I focus on technology that is fiscally responsible. Recently, I reduced AWS Fargate monthly costs by 25% through strategic microservices refactoring. <img src="https://img.icons8.com/color/24/000000/money.png" alt="Money" style="vertical-align: middle; margin-left: 8px;" /><br />
-		<img src="https://quickchart.io/chart?c={type:'bar',data:{labels:['Before','After'],datasets:[{label:'Monthly Cost (USD)',data:[4000,3000],backgroundColor:['#FF6B6B','#51CF66']}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}}" alt="Cost Reduction Graph - 25% Savings" width="350" style="display: block; margin: 10px 0; animation: float 3s ease-in-out infinite;" />
-		The AI Edge: RAG Pipeline Design, Prompt Engineering, and custom metadata caching that slashed token costs by 60% 💰. <img src="https://img.icons8.com/color/24/000000/artificial-intelligence.png" alt="AI" style="vertical-align: middle; margin-left: 8px;" /> Modern Backend: Java 17, Spring Boot 3.2, and Microservices consolidation. Data & Cloud: AWS Specialist (Lambda, Fargate, S3) and Confluent Certified Data Streaming Engineer.
-	</p>
+			<section class="section" aria-labelledby="expertise-title">
+				<div class="section-heading">
+					<p class="eyebrow">Expertise</p>
+					<h2 id="expertise-title">Areas of focus</h2>
+				</div>
+				<div class="expertise-grid">
+					<article class="expertise-card">
+						<h3>Applied AI</h3>
+						<p>RAG pipeline design, prompt engineering, metadata caching, and production-minded LLM integration.</p>
+					</article>
+					<article class="expertise-card">
+						<h3>Backend engineering</h3>
+						<p>Java 17, Spring Boot 3.2, microservices architecture, and platform consolidation.</p>
+					</article>
+					<article class="expertise-card">
+						<h3>Cloud &amp; data</h3>
+						<p>AWS Lambda, Fargate, and S3, alongside data streaming and enterprise integrations.</p>
+					</article>
+				</div>
+			</section>
 
-	<hr />
+			<section class="section" aria-labelledby="certifications-title">
+				<div class="section-heading">
+					<p class="eyebrow">Credentials</p>
+					<h2 id="certifications-title">Certifications</h2>
+				</div>
+				<div class="certification-grid">
+					<a
+						class="certification-card"
+						href="https://www.credly.com/badges/4d4693bb-530e-4bca-9327-de07f3aa2348"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="certification-label">AWS</span>
+						<span>
+							<strong>AWS Certified AI Practitioner</strong>
+							<span>AI/ML solutions, generative AI foundations, and responsible AI.</span>
+						</span>
+						<span class="external-link" aria-hidden="true">↗</span>
+					</a>
+					<a
+						class="certification-card"
+						href="https://www.credly.com/badges/4136ced8-75d5-4afb-8677-40b6236e2672"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="certification-label">Azure</span>
+						<span>
+							<strong>Microsoft Certified: Azure AI Fundamentals (AI-900)</strong>
+							<span>Foundational knowledge of AI and machine learning workloads on Azure.</span>
+						</span>
+						<span class="external-link" aria-hidden="true">↗</span>
+					</a>
+				</div>
+			</section>
 
-	<h2><img src="https://img.icons8.com/color/24/000000/trophy.png" alt="Trophy" style="vertical-align: middle; margin-right: 8px; animation: bounce 1.5s infinite;" /> 🏆 Verified Certifications ✨</h2>
-	<div style="display: flex; align-items: center; margin-bottom: 10px;">
-		<a href="https://www.credly.com/badges/4d4693bb-530e-4bca-9327-de07f3aa2348">
-			<img src="https://images.credly.com/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png" width="80" alt="AWS Certified AI Practitioner" style="margin-right: 10px; animation: pulse 2s infinite;" />
-		</a>
-		<div style="animation: glow 2s ease-in-out infinite;">
-			<strong>AWS Certified AI Practitioner</strong><br />
-			Focuses on implementing AI/ML solutions on AWS, including generative AI foundation models and responsible AI.
-		</div>
-	</div>
-	<div style="display: flex; align-items: center; margin-bottom: 10px;">
-		<a href="https://www.credly.com/badges/4136ced8-75d5-4afb-8677-40b6236e2672">
-			<img src="https://images.credly.com/images/4136ced8-75d5-4afb-8677-40b6236e2672/azure-ai-fundamentals-600x600.png" width="80" alt="Microsoft Certified: Azure AI Fundamentals (AI-900)" style="margin-right: 10px; animation: pulse 2s infinite;" />
-		</a>
-		<div style="animation: glow 2s ease-in-out infinite;">
-			<strong>Microsoft Certified: Azure AI Fundamentals (AI-900)</strong><br />
-			Demonstrates foundational knowledge of AI and ML workloads on Microsoft Azure.
-		</div>
-	</div>
+			<section class="contact-panel" aria-labelledby="contact-title">
+				<div>
+					<p class="eyebrow">Get in touch</p>
+					<h2 id="contact-title">Let’s connect.</h2>
+					<p>I’m always glad to connect with people working on enterprise software, cloud systems, and applied AI.</p>
+				</div>
+				<a class="button button-light" href={linkedInUrl} target="_blank" rel="noreferrer">
+					Find me on LinkedIn <span aria-hidden="true">↗</span>
+				</a>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
 
-	<hr />
+<style>
+	.about-page {
+		width: min(100% - 2rem, 960px);
+		max-width: none;
+		margin-inline: auto;
+		padding: clamp(2.5rem, 6vw, 5rem) 0;
+	}
 
-	<h2><img src="https://img.icons8.com/color/24/000000/handshake.png" alt="Connect" style="vertical-align: middle; margin-right: 8px; animation: float 2.5s ease-in-out infinite;" /> 🤝 Let's Connect 🌐</h2>
-	<p style="animation: float 2.5s ease-in-out infinite;">
-		<img src="https://img.icons8.com/color/24/000000/marker.png" alt="Location" style="vertical-align: middle; margin-right: 8px;" /> <strong>Location</strong>: Pune, Maharashtra 🇮🇳<br />
-		<img src="https://img.icons8.com/color/24/000000/linkedin.png" alt="LinkedIn" style="vertical-align: middle; margin-right: 8px;" /> <strong>LinkedIn</strong>: <a href="https://linkedin.com/in/vinayakmanjare">linkedin.com/in/vinayakmanjare</a>
-	</p>
-</Layout>
+	.intro {
+		display: grid;
+		grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.75fr);
+		align-items: center;
+		gap: clamp(2rem, 6vw, 5rem);
+		padding-bottom: clamp(3rem, 7vw, 5.5rem);
+	}
+
+	.eyebrow {
+		margin: 0 0 0.6rem;
+		color: var(--accent);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.intro h1 {
+		max-width: 13ch;
+		margin-bottom: 1rem;
+		font-size: clamp(2.4rem, 5.5vw, 4rem);
+		letter-spacing: -0.045em;
+	}
+
+	.intro-copy > p:not(.eyebrow) {
+		max-width: 62ch;
+	}
+
+	.intro .lead {
+		color: rgb(var(--black));
+		font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+		line-height: 1.5;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
+
+	.button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.8rem;
+		padding: 0.65rem 1rem;
+		border: 1px solid transparent;
+		border-radius: 0.5rem;
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+	}
+
+	.button-primary {
+		background: var(--accent);
+		color: #fff;
+	}
+
+	.button-primary:hover {
+		background: var(--accent-dark);
+		color: #fff;
+	}
+
+	.button-secondary {
+		border-color: rgb(var(--gray-light));
+		background: #fff;
+		color: rgb(var(--gray-dark));
+	}
+
+	.button-secondary:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.profile-card {
+		padding: 1.5rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 1rem;
+		background: rgb(255 255 255 / 82%);
+		box-shadow: 0 12px 36px rgb(var(--black) / 7%);
+	}
+
+	.profile-card dl {
+		display: grid;
+		gap: 1.1rem;
+		margin: 1.25rem 0 0;
+	}
+
+	.profile-card dl div {
+		padding-top: 1rem;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.profile-card dt {
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+	}
+
+	.profile-card dd {
+		margin: 0.2rem 0 0;
+		color: rgb(var(--black));
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.45;
+	}
+
+	.section {
+		padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.section-heading {
+		max-width: 650px;
+		margin-bottom: 1.75rem;
+	}
+
+	.section-heading h2,
+	.contact-panel h2 {
+		margin-bottom: 0.5rem;
+		font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+		letter-spacing: -0.03em;
+	}
+
+	.section-heading > p:last-child {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+	}
+
+	.timeline {
+		display: grid;
+		gap: 0;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.timeline-item {
+		display: grid;
+		grid-template-columns: 150px minmax(0, 1fr);
+		gap: 1.5rem;
+		padding: 1.5rem 0;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.timeline-item:first-child {
+		border-top: 0;
+	}
+
+	.timeline-date {
+		margin: 0;
+		color: var(--accent);
+		font-size: 0.9rem;
+		font-weight: 700;
+	}
+
+	.timeline-item h3,
+	.impact-card h3,
+	.expertise-card h3 {
+		margin: 0 0 0.45rem;
+		font-size: 1.1rem;
+	}
+
+	.timeline-item h3 span {
+		display: block;
+		margin-top: 0.25rem;
+		color: rgb(var(--gray));
+		font-size: 0.85rem;
+		font-weight: 400;
+	}
+
+	.timeline-item div p,
+	.impact-card p:last-child,
+	.expertise-card p {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.65;
+	}
+
+	.impact-grid,
+	.expertise-grid,
+	.certification-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.impact-card,
+	.expertise-card {
+		padding: 1.5rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 0.8rem;
+		background: #fff;
+	}
+
+	.metric {
+		margin: 0 0 0.4rem;
+		color: var(--accent);
+		font-size: 2.5rem;
+		font-weight: 700;
+		letter-spacing: -0.05em;
+		line-height: 1;
+	}
+
+	.expertise-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.expertise-card h3 {
+		color: rgb(var(--black));
+	}
+
+	.certification-card {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: start;
+		gap: 1rem;
+		padding: 1.25rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 0.8rem;
+		background: #fff;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		transition: border-color 160ms ease, box-shadow 160ms ease;
+	}
+
+	.certification-card:hover {
+		border-color: var(--accent);
+		box-shadow: 0 8px 24px rgb(var(--black) / 8%);
+		color: rgb(var(--gray-dark));
+	}
+
+	.certification-label {
+		display: grid;
+		width: 2.6rem;
+		height: 2.6rem;
+		place-items: center;
+		border-radius: 0.6rem;
+		background: rgb(var(--gray-light) / 55%);
+		color: var(--accent-dark);
+		font-size: 0.7rem;
+		font-weight: 700;
+	}
+
+	.certification-card strong,
+	.certification-card span span {
+		display: block;
+	}
+
+	.certification-card strong {
+		margin-bottom: 0.35rem;
+		color: rgb(var(--black));
+		font-size: 0.95rem;
+		line-height: 1.4;
+	}
+
+	.certification-card span span {
+		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+
+	.external-link {
+		color: var(--accent);
+		font-size: 1.1rem;
+	}
+
+	.contact-panel {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		padding: clamp(1.5rem, 4vw, 2.5rem);
+		border-radius: 1rem;
+		background: rgb(var(--gray-dark));
+		color: #fff;
+	}
+
+	.contact-panel .eyebrow {
+		color: #aeb8ff;
+	}
+
+	.contact-panel h2 {
+		color: #fff;
+	}
+
+	.contact-panel p:last-child {
+		max-width: 56ch;
+		margin: 0;
+		color: rgb(255 255 255 / 78%);
+		font-size: 0.95rem;
+	}
+
+	.button-light {
+		flex: 0 0 auto;
+		background: #fff;
+		color: rgb(var(--gray-dark));
+	}
+
+	.button-light:hover {
+		background: #e9ebff;
+		color: rgb(var(--gray-dark));
+	}
+
+	@media (max-width: 760px) {
+		.intro {
+			grid-template-columns: 1fr;
+		}
+
+		.profile-card {
+			max-width: none;
+		}
+
+		.expertise-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.about-page {
+			width: min(100% - 1.5rem, 960px);
+		}
+
+		.timeline-item {
+			grid-template-columns: 1fr;
+			gap: 0.4rem;
+		}
+
+		.impact-grid,
+		.certification-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-panel {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.button,
+		.certification-card {
+			transition: none;
+		}
+	}
+</style>
