@@ -4,15 +4,19 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { BLOG_TOPICS, SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const today = new Date();
-const posts = (await getCollection('blog'))
-	.filter((post) => post.data.pubDate <= today)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
-const featuredPost = posts[0];
-const archivePosts = posts.slice(1);
+const topics = BLOG_TOPICS.map((topic) => ({
+	...topic,
+	posts: posts.filter((post) => topic.postIds.includes(post.id)),
+})).filter((topic) => topic.posts.length > 0);
+
+const categorizedPostIds = new Set(BLOG_TOPICS.flatMap((topic) => topic.postIds));
+const uncategorizedPosts = posts.filter((post) => !categorizedPostIds.has(post.id));
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -33,44 +37,72 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 				</p>
 			</header>
 
-			{featuredPost ? (
-				<section class="featured-section" aria-labelledby="featured-title">
-					<p class="eyebrow">Latest article</p>
-					<a class="featured-card" href={`${basePath}/blog/${featuredPost.id}/`}>
-						<div class="featured-copy">
-							<p class="date"><FormattedDate date={featuredPost.data.pubDate} /></p>
-							<h2 id="featured-title">{featuredPost.data.title}</h2>
-							<p class="description">{featuredPost.data.description}</p>
-							<span class="read-link">Read article <span aria-hidden="true">→</span></span>
-						</div>
-						<span class="featured-mark" aria-hidden="true">01</span>
+			<nav class="topic-nav" aria-label="Browse articles by topic">
+				<a href="#articles">All articles <span>{posts.length}</span></a>
+				{topics.map((topic) => (
+					<a href={`#topic-${topic.id}`}>
+						{topic.title} <span>{topic.posts.length}</span>
 					</a>
-				</section>
-			) : (
-				<p>No articles are published yet. Check back soon.</p>
-			)}
+				))}
+				{uncategorizedPosts.length > 0 && (
+					<a href="#topic-other">Other <span>{uncategorizedPosts.length}</span></a>
+				)}
+			</nav>
 
-			{archivePosts.length > 0 && (
-				<section class="archive-section" aria-labelledby="archive-title">
-					<div class="section-heading">
-						<div>
-							<p class="eyebrow">Browse the archive</p>
-							<h2 id="archive-title">More articles</h2>
+			<section class="archive-section" id="articles" aria-labelledby="archive-title">
+				<div class="section-heading">
+					<div>
+						<p class="eyebrow">Browse the archive</p>
+						<h2 id="archive-title">All articles</h2>
+					</div>
+					<p>{posts.length} articles</p>
+				</div>
+
+				{topics.map((topic) => (
+					<section class="topic-section" id={`topic-${topic.id}`} aria-labelledby={`heading-${topic.id}`}>
+						<div class="topic-heading">
+							<div>
+								<p class="eyebrow">Topic</p>
+								<h3 id={`heading-${topic.id}`}>{topic.title}</h3>
+								<p>{topic.description}</p>
+							</div>
+							<span class="topic-count">{topic.posts.length} articles</span>
 						</div>
-						<p>{archivePosts.length} articles</p>
-					</div>
-					<div class="article-grid">
-						{archivePosts.map((post) => (
-							<a class="article-card" href={`${basePath}/blog/${post.id}/`}>
-								<p class="date"><FormattedDate date={post.data.pubDate} /></p>
-								<h3>{post.data.title}</h3>
-								<p class="description">{post.data.description}</p>
-								<span class="read-link">Read article <span aria-hidden="true">→</span></span>
-							</a>
-						))}
-					</div>
-				</section>
-			)}
+						<div class="article-grid">
+							{topic.posts.map((post) => (
+								<a class="article-card" href={`${basePath}/blog/${post.id}/`}>
+									<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+									<h4>{post.data.title}</h4>
+									<p class="description">{post.data.description}</p>
+									<span class="read-link">Read article <span aria-hidden="true">→</span></span>
+								</a>
+							))}
+						</div>
+					</section>
+				))}
+
+				{uncategorizedPosts.length > 0 && (
+					<section class="topic-section" id="topic-other" aria-labelledby="heading-other">
+						<div class="topic-heading">
+							<div>
+								<p class="eyebrow">Topic</p>
+								<h3 id="heading-other">Other articles</h3>
+							</div>
+							<span class="topic-count">{uncategorizedPosts.length} articles</span>
+						</div>
+						<div class="article-grid">
+							{uncategorizedPosts.map((post) => (
+								<a class="article-card" href={`${basePath}/blog/${post.id}/`}>
+									<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+									<h4>{post.data.title}</h4>
+									<p class="description">{post.data.description}</p>
+									<span class="read-link">Read article <span aria-hidden="true">→</span></span>
+								</a>
+							))}
+						</div>
+					</section>
+				)}
+			</section>
 		</main>
 		<Footer />
 	</body>
@@ -86,7 +118,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 	.page-intro {
 		max-width: 760px;
-		padding-bottom: clamp(2.5rem, 6vw, 4rem);
+		padding-bottom: 2rem;
 	}
 
 	.eyebrow {
@@ -113,73 +145,41 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 		line-height: 1.6;
 	}
 
-	.featured-section {
-		padding: clamp(2rem, 4vw, 3rem);
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 1rem;
-		background: rgb(255 255 255 / 82%);
-		box-shadow: 0 12px 36px rgb(var(--black) / 6%);
-	}
-
-	.featured-card {
+	.topic-nav {
 		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		padding: 1.25rem 0 2.5rem;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+
+	.topic-nav a {
+		display: inline-flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: 2rem;
+		gap: 0.5rem;
+		padding: 0.55rem 0.8rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 999px;
+		background: #fff;
 		color: rgb(var(--gray-dark));
+		font-size: 0.85rem;
+		font-weight: 600;
 		text-decoration: none;
+		transition: border-color 160ms ease, color 160ms ease;
 	}
 
-	.featured-card:hover {
-		color: rgb(var(--gray-dark));
-	}
-
-	.featured-copy {
-		max-width: 740px;
-	}
-
-	.featured-card .date,
-	.article-card .date {
-		margin: 0 0 0.75rem;
-		color: rgb(var(--gray));
-		font-size: 0.8rem;
-	}
-
-	.featured-card h2 {
-		margin-bottom: 0.75rem;
-		color: rgb(var(--black));
-		font-size: clamp(1.7rem, 3.5vw, 2.5rem);
-		letter-spacing: -0.03em;
-		line-height: 1.2;
-	}
-
-	.description {
-		margin: 0 0 1.25rem;
-		font-size: 0.95rem;
-		line-height: 1.65;
-	}
-
-	.read-link {
+	.topic-nav a:hover {
+		border-color: var(--accent);
 		color: var(--accent);
-		font-size: 0.9rem;
-		font-weight: 700;
 	}
 
-	.featured-card:hover .read-link,
-	.article-card:hover .read-link {
-		color: var(--accent-dark);
-	}
-
-	.featured-mark {
-		color: rgb(var(--gray-light));
-		font-size: clamp(4rem, 10vw, 8rem);
-		font-weight: 700;
-		letter-spacing: -0.08em;
-		line-height: 1;
+	.topic-nav span {
+		color: rgb(var(--gray));
+		font-size: 0.75rem;
 	}
 
 	.archive-section {
-		padding-top: clamp(3rem, 6vw, 5rem);
+		padding-top: 2.5rem;
 	}
 
 	.section-heading {
@@ -196,10 +196,36 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 		letter-spacing: -0.03em;
 	}
 
-	.section-heading > p {
+	.section-heading > p,
+	.topic-count {
 		margin: 0 0 0.2rem;
 		color: rgb(var(--gray));
 		font-size: 0.85rem;
+	}
+
+	.topic-section {
+		padding-top: 2.5rem;
+		scroll-margin-top: 1rem;
+	}
+
+	.topic-heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.topic-heading h3 {
+		margin: 0 0 0.35rem;
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		letter-spacing: -0.025em;
+	}
+
+	.topic-heading div > p:last-child {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+		font-size: 0.9rem;
 	}
 
 	.article-grid {
@@ -229,7 +255,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 		color: rgb(var(--gray-dark));
 	}
 
-	.article-card h3 {
+	.article-card .date {
+		margin: 0 0 0.75rem;
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+	}
+
+	.article-card h4 {
 		margin: 0 0 0.75rem;
 		color: rgb(var(--black));
 		font-size: 1.1rem;
@@ -237,11 +269,20 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 	}
 
 	.article-card .description {
+		margin: 0 0 1.25rem;
 		font-size: 0.9rem;
+		line-height: 1.65;
 	}
 
-	.article-card .read-link {
+	.read-link {
 		margin-top: auto;
+		color: var(--accent);
+		font-size: 0.9rem;
+		font-weight: 700;
+	}
+
+	.article-card:hover .read-link {
+		color: var(--accent-dark);
 	}
 
 	@media (max-width: 900px) {
@@ -255,26 +296,20 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 			width: min(100% - 1.5rem, 1060px);
 		}
 
-		.featured-section {
-			padding: 1.25rem;
-		}
-
-		.featured-mark {
-			display: none;
-		}
-
 		.article-grid {
 			grid-template-columns: 1fr;
 		}
 
-		.section-heading {
+		.section-heading,
+		.topic-heading {
 			align-items: flex-start;
 			flex-direction: column;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.article-card {
+		.article-card,
+		.topic-nav a {
 			transition: none;
 		}
 	}
